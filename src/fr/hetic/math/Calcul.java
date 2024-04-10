@@ -1,9 +1,9 @@
 package fr.hetic.math;
 
-public class Calculator {
+public class Calcul {
     private final Operation operation;
 
-    public Calculator(Operation operation) {
+    public Calcul(Operation operation) {
         this.operation = operation;
     }
 

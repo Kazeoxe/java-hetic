@@ -9,13 +9,11 @@ import java.io.*;
             }
     
             File folder = new File(args[0]);
-            // Vérification de l'existence du dossier
             if (!folder.exists() || !folder.isDirectory()) {
                 System.out.println("Erreur: Le dossier spécifié n'existe pas.");
                 return;
             }
     
-            // Parcours des fichiers dans le dossier
             for (File file : folder.listFiles()) {
                 if (file.isFile() && file.getName().endsWith(".op")) {
                     processFile(file);
