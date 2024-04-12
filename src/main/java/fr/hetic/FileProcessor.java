@@ -2,6 +2,8 @@ package fr.hetic;
 
 import java.io.*;
 
+
+
 public class FileProcessor {
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -22,6 +24,30 @@ public class FileProcessor {
         }
     }
 
+    public static String calculFichier(String num1, String num2, String operator) {
+
+        double num1Double = Double.parseDouble(num1);
+        double num2Double = Double.parseDouble(num2);
+        double result;
+    
+        switch (operator) {
+            case "+":
+                result = num1Double + num2Double;
+                break;
+            case "-":
+                result = num1Double - num2Double;
+                break;
+            case "*":
+                result = num1Double * num2Double;
+                break;
+            default:
+                return "ERREUR";
+        }
+    
+        return String.valueOf(result);
+    }
+    
+
     private static void processFile(File file) {
         String outputFileName = file.getAbsolutePath().replace(".op", ".res");
         try (BufferedReader reader = new BufferedReader(new FileReader(file));
@@ -34,21 +60,7 @@ public class FileProcessor {
                         double num1 = Double.parseDouble(parts[0]);
                         double num2 = Double.parseDouble(parts[1]);
                         String operator = parts[2];
-                        double result;
-                        switch (operator) {
-                            case "+":
-                                result = num1 + num2;
-                                break;
-                            case "-":
-                                result = num1 - num2;
-                                break;
-                            case "*":
-                                result = num1 * num2;
-                                break;
-                            default:
-                                writer.write("ERROR\n");
-                                continue;
-                        }
+                        String result = calculFichier(String.valueOf(num1), String.valueOf(num2), operator);
                         writer.write(String.valueOf(result) + "\n");
                     } catch (NumberFormatException e) {
                         writer.write("ERROR\n");
