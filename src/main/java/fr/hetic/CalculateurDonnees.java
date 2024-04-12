@@ -3,7 +3,7 @@ package fr.hetic;
 import java.io.*;
 import java.sql.*;
 
-public class CalculateurDonnees {
+public class CalculateurDonnees implements Reader{
     int param1;
     int param2;
     String operateur;
@@ -20,7 +20,9 @@ public class CalculateurDonnees {
         this.type = type;
     }
 
-    public static void main(String[] args) {
+
+    @Override
+    public void read(String folderName) throws Exception {
         String url = "jdbc:postgresql://SG-hetic-mt4-java-5275-pgsql-master.servers.mongodirector.com:5432/TP";
         String utilisateur = "etudiant";
         String motDePasse = "MT4@hetic2324";
@@ -42,40 +44,42 @@ public class CalculateurDonnees {
                 String operateur = resultSet.getString("operateur");
                 int fichier_id = resultSet.getInt("fichier_id");
                 int position = resultSet.getInt("position");
-            
+
                 String sqlFileInfo = "SELECT type, nom FROM fichier WHERE id = ?";
                 PreparedStatement preparedStatement = connexion.prepareStatement(sqlFileInfo);
                 preparedStatement.setInt(1, fichier_id);
                 ResultSet resultSetFileInfo = preparedStatement.executeQuery();
-            
+
                 while (resultSetFileInfo.next()) {
                     String type = resultSetFileInfo.getString("type");
                     String nom = resultSetFileInfo.getString("nom");
-            
+
                     if ("OP".equals(type)) {
                         if (writer != null && !nom.equals(writerNom)) {
-                            writer.close(); 
-                            writer = null; 
+                            writer.close();
+                            writer = null;
                         }
                         if (writer == null) {
                             writer = new FileWriter(nom + ".res");
-                            writerNom = nom; 
+                            writerNom = nom;
                         }
-                        String res = FileProcessor.calculFichier(String.valueOf(param1), String.valueOf(param2), operateur);
+                        String res = FileProcessor.calculFichier(String.valueOf(param1), String.valueOf(param2),
+                                operateur);
                         writer.write(res + "\n");
-            
+
                         System.out.println(nom + " " + param1 + " " + param2 + res + "\n");
                     }
                 }
             }
-            
+
             if (writer != null) {
-                writer.close(); 
+                writer.close();
             }
-            
 
         } catch (SQLException | IOException e) {
             System.out.println("Erreur : " + e.getMessage());
         }
     }
+
+   
 }

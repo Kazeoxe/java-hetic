@@ -2,9 +2,7 @@ package fr.hetic;
 
 import java.io.*;
 
-
-
-public class FileProcessor {
+public class FileProcessor implements Reader {
     public static void main(String[] args) {
         if (args.length != 1) {
             System.out.println("Usage: java FileProcessor <dossier>");
@@ -29,7 +27,7 @@ public class FileProcessor {
         double num1Double = Double.parseDouble(num1);
         double num2Double = Double.parseDouble(num2);
         double result;
-    
+
         switch (operator) {
             case "+":
                 result = num1Double + num2Double;
@@ -43,13 +41,14 @@ public class FileProcessor {
             default:
                 return "ERREUR";
         }
-    
+
         return String.valueOf(result);
     }
-    
 
-    private static void processFile(File file) {
-        String outputFileName = file.getAbsolutePath().replace(".op", ".res");
+    @Override
+    public void read(String folderName) throws Exception {
+        File dossier = new File(folderName);
+        String outputFileName = folderName.getAbsolutePath().replace(".op", ".res");
         try (BufferedReader reader = new BufferedReader(new FileReader(file));
                 BufferedWriter writer = new BufferedWriter(new FileWriter(outputFileName))) {
             String line;

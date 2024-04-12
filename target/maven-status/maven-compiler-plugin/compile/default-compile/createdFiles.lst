@@ -1,10 +1,2 @@
-fr\hetic\math\Calcul.class
-fr\hetic\math\Soustraction.class
-fr\hetic\math\Multiplication.class
-fr\hetic\math\OperationFactory.class
-fr\hetic\HelloWorld.class
-fr\hetic\math\Operation.class
-fr\hetic\CalculateurFonctionnel.class
-fr\hetic\math\Calculateur.class
+fr\hetic\CalculateurDonnees.class
 fr\hetic\FileProcessor.class
-fr\hetic\math\Addition.class
